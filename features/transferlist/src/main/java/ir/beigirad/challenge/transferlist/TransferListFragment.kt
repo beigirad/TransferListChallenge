@@ -17,12 +17,15 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appbar.btnSearch.setOnClickListener { showNotImplementedToast() }
-        binding.appbar.btnDownload.setOnClickListener { showNotImplementedToast() }
-        binding.appbar.btnNotification.setOnClickListener { showNotImplementedToast() }
-        binding.appbar.btnSupport.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnSearch.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnDownload.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnNotification.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnSupport.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnCharge.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnChart.setOnClickListener { showNotImplementedToast() }
+        binding.header.btnSpaces.setOnClickListener { showNotImplementedToast() }
 
-        binding.tvBalance.text = getString(
+        binding.header.tvBalance.text = getString(
             R.string.transfer_list_balance_formatted,
             "78,500,000"
         )

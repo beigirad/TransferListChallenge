@@ -3,4 +3,7 @@
     <string name="transfer_list_title">خانه</string>
     <string name="transfer_list_balance_label">موجودی</string>
     <string name="transfer_list_balance_formatted">%s تومان</string>
+    <string name="transfer_list_chart_label">مدیریت مالی</string>
+    <string name="transfer_list_spaces_label">باکس</string>
+    <string name="transfer_list_charge_label">شارژ حساب</string>
 </resources>

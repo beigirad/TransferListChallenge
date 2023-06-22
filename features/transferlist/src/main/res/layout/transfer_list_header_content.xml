@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/transfer_list_header_background"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/top_bar_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/btn_search"
+        app:layout_constraintTop_toTopOf="@id/btn_search" />
+
+    <ImageButton
+        android:id="@+id/btn_search"
+        style="@style/TransferList.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/transfer_list_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_download"
+        style="@style/TransferList.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/transfer_list_download"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_barrier"
+        app:layout_constraintStart_toEndOf="@id/btn_search"
+        app:layout_constraintTop_toTopOf="@id/top_bar_barrier" />
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfer_list_title"
+        android:textColor="?header_text"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_barrier"
+        app:layout_constraintEnd_toStartOf="@id/btn_notification"
+        app:layout_constraintStart_toEndOf="@id/btn_download"
+        app:layout_constraintTop_toTopOf="@id/top_bar_barrier" />
+
+    <ImageButton
+        android:id="@+id/btn_notification"
+        style="@style/TransferList.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/transfer_list_notification"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_barrier"
+        app:layout_constraintEnd_toStartOf="@id/btn_support"
+        app:layout_constraintTop_toTopOf="@id/top_bar_barrier" />
+
+    <ImageButton
+        android:id="@+id/btn_support"
+        style="@style/TransferList.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/transfer_list_support"
+        app:layout_constraintBottom_toBottomOf="@id/top_bar_barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/top_bar_barrier" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="?header_text"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_search" />
+
+    <TextView
+        android:id="@+id/tv_balance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfer_list_balance_label"
+        android:textColor="?header_text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+
+    <ir.beigirad.challenge.transferlist.widget.BigActionView
+        android:id="@+id/btn_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        app:background_tint="?header_icons"
+        app:icon="@drawable/transfer_list_add"
+        app:icon_tint="?header_background"
+        app:label="@string/transfer_list_charge_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_spaces"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_balance_label" />
+
+    <ir.beigirad.challenge.transferlist.widget.BigActionView
+        android:id="@+id/btn_spaces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:background_tint="#23FFFFFF"
+        app:icon="@drawable/transfer_list_spaces"
+        app:icon_tint="?header_icons"
+        app:label="@string/transfer_list_spaces_label"
+        app:layout_constraintBottom_toBottomOf="@id/btn_charge"
+        app:layout_constraintEnd_toStartOf="@id/btn_chart"
+        app:layout_constraintStart_toEndOf="@id/btn_charge"
+        app:layout_constraintTop_toTopOf="@id/btn_charge" />
+
+    <ir.beigirad.challenge.transferlist.widget.BigActionView
+        android:id="@+id/btn_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:background_tint="#23FFFFFF"
+        app:icon="@drawable/transfer_list_chart"
+        app:icon_tint="?header_icons"
+        app:label="@string/transfer_list_chart_label"
+        app:layout_constraintBottom_toBottomOf="@id/btn_charge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_spaces"
+        app:layout_constraintTop_toTopOf="@id/btn_charge" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
