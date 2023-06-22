@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Challenge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -12,6 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:fontFamily">@font/vazir_matn</item>
+        <item name="fontFamily">@font/vazir_matn</item>
 
         <item name="header_text">@color/sky_blue</item>
         <item name="header_icons">@color/sky_blue</item>

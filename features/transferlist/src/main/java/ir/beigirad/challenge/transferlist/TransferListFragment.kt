@@ -27,7 +27,7 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
 
         binding.header.tvBalance.text = getString(
             R.string.transfer_list_balance_formatted,
-            "78,500,000"
+            "%,d".format(78500000)
         )
     }
 
