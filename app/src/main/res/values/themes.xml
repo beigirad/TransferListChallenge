@@ -12,5 +12,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="header_text">@color/white</item>
+        <item name="header_icons">@color/white</item>
+        <item name="header_background">@color/day_blue</item>
+
+        <item name="transaction_background">@color/white</item>
+        <item name="transaction_title_text">@color/teal</item>
+        <item name="transaction_description_text">@color/light_sea_green</item>
+        <item name="transaction_price_text">@color/teal</item>
+        <item name="transaction_highlight">@color/light_cyan</item>
     </style>
 </resources>

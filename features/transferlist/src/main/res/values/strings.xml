@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transfer_list_title">خانه</string>
+    <string name="transfer_list_balance_label">موجودی</string>
+    <string name="transfer_list_balance_formatted">%s تومان</string>
+</resources>

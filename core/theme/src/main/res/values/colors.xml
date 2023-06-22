@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="header_text" format="color" />
+    <attr name="header_icons" format="color" />
+    <attr name="header_background" format="color" />
+
+    <attr name="transaction_background" format="color" />
+    <attr name="transaction_title_text" format="color" />
+    <attr name="transaction_description_text" format="color" />
+    <attr name="transaction_price_text" format="color" />
+    <attr name="transaction_highlight" format="color" />
+</resources>
