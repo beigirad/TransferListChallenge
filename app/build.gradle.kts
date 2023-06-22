@@ -20,13 +20,21 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+    implementation(project(":core:theme"))
+    implementation(project(":features:transferlist"))
+
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintLayout)
+    implementation(libs.viewBindingKtx)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.androidJUnit)

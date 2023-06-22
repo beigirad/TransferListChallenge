@@ -7,6 +7,7 @@ coreKtx = { module = "androidx.core:core-ktx", version = "1.8.0" }
 appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
 material = { module = "com.google.android.material:material", version = "1.9.0" }
 constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
+viewBindingKtx = { module = "com.wada811.viewbindingktx:viewbindingktx", version = "3.0.0" }
 jUnit = { module = "junit:junit", version = "4.13.2" }
 androidJUnit = { module = "androidx.test.ext:junit", version = "1.1.5" }
 espresso = { module = "androidx.test.espresso:espresso-core", version = "3.5.1" }
