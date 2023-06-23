@@ -9,4 +9,6 @@
     <attr name="transaction_description_text" format="color" />
     <attr name="transaction_price_text" format="color" />
     <attr name="transaction_highlight" format="color" />
+    <attr name="transaction_active_icon" format="color" />
+    <attr name="transaction_non_active_icon" format="color" />
 </resources>

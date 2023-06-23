@@ -15,9 +15,12 @@ android {
 
 dependencies {
     implementation(project(":core:theme"))
+    implementation(project(":core:common"))
+    implementation(project(":core:model"))
 
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.recyclerView)
     implementation(libs.viewBindingKtx)
 }

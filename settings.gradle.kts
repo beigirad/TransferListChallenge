@@ -23,5 +23,7 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":core:common")
 include(":core:theme")
+include(":core:model")
 include(":features:transferlist")

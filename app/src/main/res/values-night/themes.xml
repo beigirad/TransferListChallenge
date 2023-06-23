@@ -25,5 +25,7 @@
         <item name="transaction_description_text">@color/sky_blue_dark</item>
         <item name="transaction_price_text">@color/sky_blue</item>
         <item name="transaction_highlight">@color/teal_dark</item>
+        <item name="transaction_active_icon">@color/teal_light</item>
+        <item name="transaction_non_active_icon">@color/mid_blue</item>
     </style>
 </resources>

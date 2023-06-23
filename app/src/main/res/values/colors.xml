@@ -9,9 +9,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="teal">#253035</color>
+    <color name="teal_light">#00BD92</color>
+    <color name="teal_mid">#00A67C</color>
     <color name="teal_dark">#154641</color>
     <color name="light_sea_green">#718E9C</color>
     <color name="light_cyan">#C9EDE8</color>
+    <color name="mid_blue">#5A707E</color>
     <color name="sky_blue">#E7EAEF</color>
     <color name="sky_blue_dark">#9FABBE</color>
     <color name="midnight_blue">#1B2028</color>
