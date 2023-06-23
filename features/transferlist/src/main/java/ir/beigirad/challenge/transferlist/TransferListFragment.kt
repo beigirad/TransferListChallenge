@@ -6,9 +6,8 @@ import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,12 +27,7 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
     private val binding by viewBinding(TransferListLayoutBinding::bind)
     private lateinit var transactionAdapter: TransactionAdapter
 
-    private lateinit var viewModel: TransferListViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(this).get()
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel: TransferListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

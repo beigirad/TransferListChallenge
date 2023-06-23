@@ -1,6 +1,8 @@
 plugins {
     id(libs.plugins.androidApplication.get().pluginId)
     id(libs.plugins.kotlinAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
 }
 
 android {
@@ -35,6 +37,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintLayout)
     implementation(libs.viewBindingKtx)
+
+    implementation(libs.hilt)
+    kapt(libs.hiltCompiler)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.androidJUnit)

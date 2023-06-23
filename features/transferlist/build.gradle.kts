@@ -1,6 +1,8 @@
 plugins {
     id(libs.plugins.androidLibrary.get().pluginId)
     id(libs.plugins.kotlinAndroid.get().pluginId)
+    id(libs.plugins.kotlinKapt.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
 }
 
 android {
@@ -22,8 +24,12 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.viewModelKtx)
     implementation(libs.lifecycleKtx)
+    implementation(libs.fragmentKtx)
     implementation(libs.material)
     implementation(libs.recyclerView)
     implementation(libs.shimmer)
     implementation(libs.viewBindingKtx)
+
+    implementation(libs.hilt)
+    kapt(libs.hiltCompiler)
 }

@@ -2,6 +2,7 @@ package ir.beigirad.challenge.transferlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.beigirad.challenge.common.Price
 import ir.beigirad.challenge.common.ViewResource
 import ir.beigirad.challenge.model.TransactionEntity
@@ -12,12 +13,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import javax.inject.Inject
 import kotlin.random.Random
 
 /**
  * Created by Farhad Beigirad on 6/23/23.
  */
-class TransferListViewModel : ViewModel() {
+@HiltViewModel
+class TransferListViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(TransferListUiState())
     val uiState = _uiState.asStateFlow()
