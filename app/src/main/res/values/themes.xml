@@ -27,5 +27,7 @@
         <item name="transaction_highlight">@color/light_cyan</item>
         <item name="transaction_active_icon">@color/teal_mid</item>
         <item name="transaction_non_active_icon">@color/mid_blue</item>
+
+        <item name="handle_color">@color/sky_blue</item>
     </style>
 </resources>

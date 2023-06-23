@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="40dp"
         app:background_tint="?header_icons"
         app:icon="@drawable/transfer_list_add"
         app:icon_tint="?header_background"

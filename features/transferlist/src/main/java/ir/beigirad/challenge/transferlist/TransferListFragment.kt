@@ -2,11 +2,14 @@ package ir.beigirad.challenge.transferlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
 import ir.beigirad.challenge.common.Price
+import ir.beigirad.challenge.common.util.toPx
 import ir.beigirad.challenge.model.TransactionEntity
 import ir.beigirad.challenge.model.TransactionType
 import ir.beigirad.challenge.transferlist.databinding.TransferListLayoutBinding
@@ -35,6 +38,17 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = TransactionAdapter().also { transactionAdapter = it }
         transactionAdapter.submitList(getFakeTransactions())
+
+        // postpone setting bottom-sheet's peak-height after measurement of header
+        binding.header.root.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    BottomSheetBehavior.from(binding.sheetContainer).peekHeight =
+                        binding.root.height - binding.header.root.height + /* overlap = */16.toPx
+                    binding.header.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            }
+        )
 
         binding.header.tvBalance.text = getString(
             R.string.transfer_list_price_formatted,

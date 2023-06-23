@@ -2,7 +2,6 @@ package ir.beigirad.challenge.transferlist.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -76,5 +75,3 @@ class BigActionView @JvmOverloads constructor(
             }
     }
 }
-
-val Int.toPx get() = (this * Resources.getSystem().displayMetrics.density).toInt()
