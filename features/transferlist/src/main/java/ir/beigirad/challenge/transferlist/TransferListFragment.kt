@@ -2,9 +2,13 @@ package ir.beigirad.challenge.transferlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -43,12 +47,28 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = TransactionAdapter().also { transactionAdapter = it }
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.header.btnSearch.updateLayoutParams<MarginLayoutParams> { topMargin = insets.top }
+            binding.sheetContentContainer.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+
         // postpone setting bottom-sheet's peak-height after measurement of header
         binding.header.root.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
+                    val overlapSize = 16.toPx
+                    val topInset = ViewCompat.getRootWindowInsets(binding.root)
+                        ?.getInsets(WindowInsetsCompat.Type.systemBars())
+                        ?.top ?: 0
+
                     BottomSheetBehavior.from(binding.sheetContainer).peekHeight =
-                        binding.root.height - binding.header.root.height + /* overlap = */16.toPx
+                        binding.root.height - binding.header.root.height + overlapSize + topInset
+
                     binding.header.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             }

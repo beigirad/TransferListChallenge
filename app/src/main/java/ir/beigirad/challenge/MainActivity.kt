@@ -3,6 +3,7 @@ package ir.beigirad.challenge
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.wada811.viewbindingktx.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.challenge.databinding.ActivityMainBinding
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // lay out app in full-screen
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         // TODO locale and layout direction setting must be handled in app startup or in a manager
         window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL

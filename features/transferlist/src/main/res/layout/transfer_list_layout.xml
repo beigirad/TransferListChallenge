@@ -12,79 +12,84 @@
         android:id="@+id/sheet_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/transfer_list_sheet_background"
-        android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <View
-            android:layout_width="36dp"
-            android:layout_height="4dp"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/transfer_list_sheet_handle" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+        <FrameLayout
+            android:id="@+id/sheet_content_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
+            android:background="@drawable/transfer_list_sheet_background">
 
-        <LinearLayout
-            android:id="@+id/error_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:orientation="vertical">
+            <View
+                android:layout_width="36dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/transfer_list_sheet_handle" />
 
-            <TextView
-                android:id="@+id/tv_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:textColor="?transaction_title_text"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/btn_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/transfer_list_try_again" />
-
-        </LinearLayout>
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp" />
+
+            <LinearLayout
+                android:id="@+id/error_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <include layout="@layout/transfer_list_transaction_shimmer" />
+                <TextView
+                    android:id="@+id/tv_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:textColor="?transaction_title_text"
+                    android:textSize="15sp" />
 
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
-
-                <include layout="@layout/transfer_list_transaction_shimmer" />
+                <Button
+                    android:id="@+id/btn_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer_list_try_again" />
 
             </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                    <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </FrameLayout>
     </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
