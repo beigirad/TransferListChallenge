@@ -20,6 +20,8 @@ dependencies {
 
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
+    implementation(libs.viewModelKtx)
+    implementation(libs.lifecycleKtx)
     implementation(libs.material)
     implementation(libs.recyclerView)
     implementation(libs.viewBindingKtx)
