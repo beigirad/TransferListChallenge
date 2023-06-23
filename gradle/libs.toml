@@ -9,6 +9,7 @@ material = { module = "com.google.android.material:material", version = "1.9.0" 
 constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
 recyclerView = { module = "androidx.recyclerview:recyclerview", version = "1.2.1" }
 viewBindingKtx = { module = "com.wada811.viewbindingktx:viewbindingktx", version = "3.0.0" }
+persianDate = { module = "com.github.samanzamani:PersianDate", version = "1.6.1" }
 jUnit = { module = "junit:junit", version = "4.13.2" }
 androidJUnit = { module = "androidx.test.ext:junit", version = "1.1.5" }
 espresso = { module = "androidx.test.espresso:espresso-core", version = "3.5.1" }

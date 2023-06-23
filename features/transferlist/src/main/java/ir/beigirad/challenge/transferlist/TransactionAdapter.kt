@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.ShapeAppearanceModel
+import ir.beigirad.challenge.common.DateConvertor
 import ir.beigirad.challenge.common.util.obtainThemeColor
 import ir.beigirad.challenge.model.TransactionEntity
 import ir.beigirad.challenge.model.TransactionType
@@ -46,7 +47,9 @@ class TransactionAdapter : ListAdapter<TransactionEntity, TransactionAdapter.VH>
         fun bind(model: TransactionEntity) {
             with(binding) {
                 tvTitle.text = model.title
-                tvDescription.text = model.date.toString() // FIXME date formatting
+                tvDescription.text = DateConvertor.convert(model.date).run {
+                    "%s، %d %s %d %d:%02d".format(weekDayName, day, monthName, year, hour, minute)
+                }
 
                 tvPrice.text = itemView.context.resources.getString(
                     R.string.transfer_list_price_formatted,

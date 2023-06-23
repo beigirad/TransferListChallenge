@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "ir.beigirad.challenge.common"
 }
+
+dependencies {
+    implementation(libs.persianDate)
+}
