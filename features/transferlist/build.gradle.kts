@@ -24,5 +24,6 @@ dependencies {
     implementation(libs.lifecycleKtx)
     implementation(libs.material)
     implementation(libs.recyclerView)
+    implementation(libs.shimmer)
     implementation(libs.viewBindingKtx)
 }

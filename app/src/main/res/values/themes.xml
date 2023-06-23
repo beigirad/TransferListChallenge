@@ -29,5 +29,6 @@
         <item name="transaction_non_active_icon">@color/mid_blue</item>
 
         <item name="handle_color">@color/sky_blue</item>
+        <item name="shimmer_color">@color/gray</item>
     </style>
 </resources>

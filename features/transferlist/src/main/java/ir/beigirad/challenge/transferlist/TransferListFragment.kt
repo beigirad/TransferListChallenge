@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
 import ir.beigirad.challenge.common.ViewResource
+import ir.beigirad.challenge.common.asString
 import ir.beigirad.challenge.common.util.toPx
 import ir.beigirad.challenge.transferlist.databinding.TransferListLayoutBinding
 import kotlinx.coroutines.launch
@@ -66,10 +68,16 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
                             getString(R.string.transfer_list_price_formatted, "%,d".format(balance.asNumber()))
                     }
 
+                    binding.errorContainer.isVisible = uiState.transactions is ViewResource.Failure
+                    binding.shimmer.isVisible = uiState.transactions is ViewResource.Loading
+                    binding.recycler.isVisible = uiState.transactions is ViewResource.Success
                     when (val transactions = uiState.transactions) {
-                        ViewResource.NotAvailable -> Unit
-                        is ViewResource.Loading,
-                        is ViewResource.Failure -> {/* TODO implement loading and failure uiState*/
+                        ViewResource.NotAvailable -> Unit // do nothing
+                        is ViewResource.Loading -> Unit // handled above
+
+                        is ViewResource.Failure -> {
+                            binding.tvError.text = transactions.error.asString()
+                            binding.btnError.setOnClickListener { viewModel.attemptFetchAll() }
                         }
 
                         is ViewResource.Success ->

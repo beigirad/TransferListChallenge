@@ -65,4 +65,9 @@ class TransferListViewModel : ViewModel() {
             _uiState.update { it.copy(transactions = ViewResource.Success(list)) }
         }
     }
+
+    fun attemptFetchAll() {
+        fetchBalance()
+        fetchFakeTransaction()
+    }
 }
