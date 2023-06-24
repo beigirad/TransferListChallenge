@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation(project(":core:theme"))
+    implementation(project(":core:data"))
     implementation(project(":features:transferlist"))
 
     implementation(libs.coreKtx)
