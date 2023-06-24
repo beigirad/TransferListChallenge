@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.challenge.common.ViewResource
 import ir.beigirad.challenge.common.asString
 import ir.beigirad.challenge.common.util.toPx
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 /**
  * Created by Farhad Beigirad on 6/22/23.
  */
+@AndroidEntryPoint
 class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
 
     private val binding by viewBinding(TransferListLayoutBinding::bind)
