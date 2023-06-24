@@ -1,6 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.Challenge" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Challenge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,22 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:fontFamily">@font/vazir_matn</item>
+        <item name="fontFamily">@font/vazir_matn</item>
+
+        <item name="header_text">@color/white</item>
+        <item name="header_icons">@color/white</item>
+        <item name="header_background">@color/day_blue</item>
+
+        <item name="transaction_background">@color/white</item>
+        <item name="transaction_title_text">@color/teal</item>
+        <item name="transaction_description_text">@color/light_sea_green</item>
+        <item name="transaction_price_text">@color/teal</item>
+        <item name="transaction_highlight">@color/light_cyan</item>
+        <item name="transaction_active_icon">@color/teal_mid</item>
+        <item name="transaction_non_active_icon">@color/mid_blue</item>
+
+        <item name="handle_color">@color/sky_blue</item>
     </style>
 </resources>

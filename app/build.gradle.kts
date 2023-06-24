@@ -5,12 +5,9 @@ plugins {
 
 android {
     namespace = "ir.beigirad.challenge"
-    setCompileSdkVersion(33)
 
     defaultConfig {
         applicationId = "ir.beigirad.challenge"
-        minSdk = 21
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -24,21 +21,20 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
+    implementation(project(":core:theme"))
+    implementation(project(":features:transferlist"))
+
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintLayout)
+    implementation(libs.viewBindingKtx)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.androidJUnit)

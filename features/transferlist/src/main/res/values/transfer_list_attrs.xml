@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="BigActionView" tools:ignore="ResourceName">
+        <attr name="label" format="string|reference" />
+        <attr name="icon" format="reference" />
+        <attr name="icon_tint" format="color|reference" />
+        <attr name="background_tint" format="color|reference" />
+    </declare-styleable>
+</resources>
