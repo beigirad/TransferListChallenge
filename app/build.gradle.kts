@@ -48,6 +48,7 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(libs.timber)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.androidJUnit)
