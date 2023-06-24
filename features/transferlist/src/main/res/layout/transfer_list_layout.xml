@@ -8,7 +8,7 @@
         android:id="@+id/header"
         layout="@layout/transfer_list_header_content" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/sheet_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,15 +19,72 @@
         <View
             android:layout_width="36dp"
             android:layout_height="4dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="4dp"
             android:background="@drawable/transfer_list_sheet_handle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp" />
+
+        <LinearLayout
+            android:id="@+id/error_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:textColor="?transaction_title_text"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transfer_list_try_again" />
+
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+                <include layout="@layout/transfer_list_transaction_shimmer" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

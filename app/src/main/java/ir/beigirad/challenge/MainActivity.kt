@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.wada811.viewbindingktx.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.challenge.databinding.ActivityMainBinding
 import ir.beigirad.challenge.transferlist.TransferListFragment
 import java.util.Locale
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding by viewBinding(ActivityMainBinding::bind)
 

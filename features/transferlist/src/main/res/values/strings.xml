@@ -6,4 +6,5 @@
     <string name="transfer_list_chart_label">مدیریت مالی</string>
     <string name="transfer_list_spaces_label">باکس</string>
     <string name="transfer_list_charge_label">شارژ حساب</string>
+    <string name="transfer_list_try_again">تلاش دوباره</string>
 </resources>

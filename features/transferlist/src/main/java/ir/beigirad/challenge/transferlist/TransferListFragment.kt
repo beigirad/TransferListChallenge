@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
-import ir.beigirad.challenge.common.Price
+import ir.beigirad.challenge.common.ViewResource
+import ir.beigirad.challenge.common.asString
 import ir.beigirad.challenge.common.util.toPx
-import ir.beigirad.challenge.model.TransactionEntity
-import ir.beigirad.challenge.model.TransactionType
 import ir.beigirad.challenge.transferlist.databinding.TransferListLayoutBinding
-import java.util.Calendar
-import kotlin.random.Random
+import kotlinx.coroutines.launch
 
 /**
  * Created by Farhad Beigirad on 6/22/23.
@@ -23,6 +26,8 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
 
     private val binding by viewBinding(TransferListLayoutBinding::bind)
     private lateinit var transactionAdapter: TransactionAdapter
+
+    private val viewModel: TransferListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +42,6 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = TransactionAdapter().also { transactionAdapter = it }
-        transactionAdapter.submitList(getFakeTransactions())
 
         // postpone setting bottom-sheet's peak-height after measurement of header
         binding.header.root.viewTreeObserver.addOnGlobalLayoutListener(
@@ -50,39 +54,35 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
             }
         )
 
-        binding.header.tvBalance.text = getString(
-            R.string.transfer_list_price_formatted,
-            "%,d".format(78500000)
-        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    uiState.balance.asOk()?.data?.let { balance ->
+                        binding.header.tvBalance.text =
+                            getString(R.string.transfer_list_price_formatted, "%,d".format(balance.asNumber()))
+                    }
+
+                    binding.errorContainer.isVisible = uiState.transactions is ViewResource.Failure
+                    binding.shimmer.isVisible = uiState.transactions is ViewResource.Loading
+                    binding.recycler.isVisible = uiState.transactions is ViewResource.Success
+                    when (val transactions = uiState.transactions) {
+                        ViewResource.NotAvailable -> Unit // do nothing
+                        is ViewResource.Loading -> Unit // handled above
+
+                        is ViewResource.Failure -> {
+                            binding.tvError.text = transactions.error.asString()
+                            binding.btnError.setOnClickListener { viewModel.attemptFetchAll() }
+                        }
+
+                        is ViewResource.Success ->
+                            transactionAdapter.submitList(transactions.data)
+                    }
+                }
+            }
+        }
     }
 
     private fun showNotImplementedToast() {
         Toast.makeText(context, "NotImplemented", Toast.LENGTH_SHORT).show()
-    }
-
-    // FIXME provide transactions data from viewmodel
-    private fun getFakeTransactions(): List<TransactionEntity> {
-        val transactionTypeTitle = listOf(
-            TransactionType.Remittance to "انتقال به سپرده",
-            TransactionType.Remittance to "انتقال پل",
-            TransactionType.Atm to "برداشت از کارت",
-            TransactionType.DepositGift to "هدیه دعوت از دوستان",
-            TransactionType.Fee to "کارمزد انتقال",
-        )
-
-        val calendar = Calendar.getInstance()
-
-        return List(100) {
-            val (transactionType, title) = transactionTypeTitle.random()
-            calendar.add(Calendar.DAY_OF_YEAR, Random.nextInt(-8, -1))
-            calendar.add(Calendar.SECOND, Random.nextInt(-16000, -1000))
-            TransactionEntity(
-                id = it.toULong(),
-                title = title,
-                type = transactionType,
-                date = calendar.time,
-                amount = Price((Random.nextFloat() * 10_000).toUInt() * 1000u)
-            )
-        }
     }
 }

@@ -13,4 +13,5 @@
     <attr name="transaction_non_active_icon" format="color" />
 
     <attr name="handle_color" format="color" />
+    <attr name="shimmer_color" format="color" />
 </resources>

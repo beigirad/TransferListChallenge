@@ -19,4 +19,5 @@
     <color name="sky_blue_dark">#9FABBE</color>
     <color name="midnight_blue">#1B2028</color>
     <color name="day_blue">#3D7EE6</color>
+    <color name="gray">#D8D8D8</color>
 </resources>
