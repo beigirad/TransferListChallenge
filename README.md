@@ -21,14 +21,14 @@ You can access to latest `.apk` of each PR or commit on `develop` branch.
 1. Project tends to use the cutting edge technologies that might be experimental in the Android
    ecosystem (such as `version catalog`).
    In order to achieve this, *Canary Android studio (Hedgehog)* is used which supports them.
-3. This project also tends to represent my following skills: Git, Git flow, automation, code style,
+2. This project also tends to represent my following skills: Git, Git flow, automation, code style,
    android new tools
-4. Pull requests and respective branches will not be removed
-5. Project uses a combination of Google's recommended architecture and `Clean` arch. `data`
+3. Pull requests and respective branches will not be removed
+4. Project uses a combination of Google's recommended architecture and `Clean` arch. `data`
    contains `domain` repositories but domain models has moved into `models`.
    And all of them goes into `/core` sub-directory. Feature modules are subset of `/feature`
    directory.
-6. Some of generic classes has their own responsibilty and definition on their JavaDoc in
+5. Some of generic classes has their own responsibility and definition on their JavaDoc in
    source-code
 
 ## Tasks
