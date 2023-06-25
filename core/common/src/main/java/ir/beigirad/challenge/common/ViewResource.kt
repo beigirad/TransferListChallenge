@@ -1,5 +1,10 @@
 package ir.beigirad.challenge.common
 
+/**
+ * * Created by Farhad Beigirad on 6/23/23.
+ *
+ * This class is used for UI states
+ */
 sealed class ViewResource<out T> {
     object NotAvailable : ViewResource<Nothing>()
     class Loading<T> : ViewResource<T>()
