@@ -2,26 +2,34 @@ package ir.beigirad.challenge.transferlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
-import ir.beigirad.challenge.common.ViewResource
+import dagger.hilt.android.AndroidEntryPoint
+import ir.beigirad.challenge.common.PaginationViewResource
 import ir.beigirad.challenge.common.asString
 import ir.beigirad.challenge.common.util.toPx
 import ir.beigirad.challenge.transferlist.databinding.TransferListLayoutBinding
+import ir.beigirad.challenge.transferlist.util.EndAwareAdapter
 import kotlinx.coroutines.launch
 
 /**
  * Created by Farhad Beigirad on 6/22/23.
  */
+@AndroidEntryPoint
 class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
 
     private val binding by viewBinding(TransferListLayoutBinding::bind)
@@ -41,14 +49,36 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
         binding.header.btnSpaces.setOnClickListener { showNotImplementedToast() }
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.adapter = TransactionAdapter().also { transactionAdapter = it }
+        binding.recycler.adapter = ConcatAdapter(
+            TransactionAdapter().also { transactionAdapter = it },
+            EndAwareAdapter(
+                onScrolledEnd = viewModel::attemptLoadMoreTransactions,
+                hasMoreToLoad = viewModel.uiState.value.transactions::hasMore
+            )
+        )
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.header.btnSearch.updateLayoutParams<MarginLayoutParams> { topMargin = insets.top }
+            binding.sheetContentContainer.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
 
         // postpone setting bottom-sheet's peak-height after measurement of header
         binding.header.root.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
+                    val overlapSize = 16.toPx
+                    val topInset = ViewCompat.getRootWindowInsets(binding.root)
+                        ?.getInsets(WindowInsetsCompat.Type.systemBars())
+                        ?.top ?: 0
+
                     BottomSheetBehavior.from(binding.sheetContainer).peekHeight =
-                        binding.root.height - binding.header.root.height + /* overlap = */16.toPx
+                        binding.root.height - binding.header.root.height + overlapSize + topInset
+
                     binding.header.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             }
@@ -62,24 +92,46 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
                             getString(R.string.transfer_list_price_formatted, "%,d".format(balance.asNumber()))
                     }
 
-                    binding.errorContainer.isVisible = uiState.transactions is ViewResource.Failure
-                    binding.shimmer.isVisible = uiState.transactions is ViewResource.Loading
-                    binding.recycler.isVisible = uiState.transactions is ViewResource.Success
                     when (val transactions = uiState.transactions) {
-                        ViewResource.NotAvailable -> Unit // do nothing
-                        is ViewResource.Loading -> Unit // handled above
+                        is PaginationViewResource.NotAvailable -> Unit // do nothing
+                        is PaginationViewResource.Loading -> {
+                            updateTripeViews(
+                                showError = false,
+                                showShimmer = uiState.transactions.data.isEmpty(),
+                                showRecyclerView = uiState.transactions.data.isNotEmpty()
+                            )
+                        }
 
-                        is ViewResource.Failure -> {
+                        is PaginationViewResource.Failure -> {
+                            updateTripeViews(
+                                showError = true,
+                                showShimmer = false,
+                                showRecyclerView = false
+                            )
+
                             binding.tvError.text = transactions.error.asString()
                             binding.btnError.setOnClickListener { viewModel.attemptFetchAll() }
                         }
 
-                        is ViewResource.Success ->
+                        is PaginationViewResource.Success -> {
+                            updateTripeViews(
+                                showError = false,
+                                showShimmer = false,
+                                showRecyclerView = uiState.transactions.data.isNotEmpty()
+                            )
+
                             transactionAdapter.submitList(transactions.data)
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun updateTripeViews(showError: Boolean, showShimmer: Boolean, showRecyclerView: Boolean) {
+        binding.errorContainer.isVisible = showError
+        binding.shimmer.isVisible = showShimmer
+        binding.recycler.isVisible = showRecyclerView
     }
 
     private fun showNotImplementedToast() {

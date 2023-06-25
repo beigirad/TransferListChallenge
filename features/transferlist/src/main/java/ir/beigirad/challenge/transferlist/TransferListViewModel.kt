@@ -3,24 +3,25 @@ package ir.beigirad.challenge.transferlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.beigirad.challenge.common.Price
+import ir.beigirad.challenge.common.Either
+import ir.beigirad.challenge.common.PaginationViewResource
 import ir.beigirad.challenge.common.ViewResource
-import ir.beigirad.challenge.model.TransactionEntity
-import ir.beigirad.challenge.model.TransactionType
-import kotlinx.coroutines.delay
+import ir.beigirad.challenge.data.repository.TransferRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Calendar
+import timber.log.Timber
 import javax.inject.Inject
-import kotlin.random.Random
 
 /**
  * Created by Farhad Beigirad on 6/23/23.
  */
 @HiltViewModel
-class TransferListViewModel @Inject constructor() : ViewModel() {
+class TransferListViewModel @Inject constructor(
+    private val repository: TransferRepository,
+) : ViewModel() {
+    private val transactionPageSize = 10
 
     private val _uiState = MutableStateFlow(TransferListUiState())
     val uiState = _uiState.asStateFlow()
@@ -31,46 +32,44 @@ class TransferListViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun fetchBalance() {
+        _uiState.update { it.copy(balance = ViewResource.Loading()) }
         viewModelScope.launch {
-            _uiState.update { it.copy(balance = ViewResource.Loading()) }
-            delay(1000)
-            _uiState.update { it.copy(balance = ViewResource.Success(Price(78500000u))) }
+            when (val result = repository.getBalance()) {
+                is Either.Success ->
+                    _uiState.update { it.copy(balance = ViewResource.Success(result.value)) }
+
+                is Either.Failure ->
+                    _uiState.update { it.copy(balance = ViewResource.Failure(result.error)) }
+            }
         }
     }
 
     private fun fetchFakeTransaction() {
-        val transactionTypeTitle = listOf(
-            TransactionType.Remittance to "انتقال به سپرده",
-            TransactionType.Remittance to "انتقال پل",
-            TransactionType.Atm to "برداشت از کارت",
-            TransactionType.DepositGift to "هدیه دعوت از دوستان",
-            TransactionType.Fee to "کارمزد انتقال",
-        )
-
-        val calendar = Calendar.getInstance()
-
-        val list = List(100) {
-            val (transactionType, title) = transactionTypeTitle.random()
-            calendar.add(Calendar.DAY_OF_YEAR, Random.nextInt(-8, -1))
-            calendar.add(Calendar.SECOND, Random.nextInt(-16000, -1000))
-            TransactionEntity(
-                id = it.toULong(),
-                title = title,
-                type = transactionType,
-                date = calendar.time,
-                amount = Price((Random.nextFloat() * 10_000).toUInt() * 1000u)
-            )
-        }
-
-        _uiState.update { it.copy(transactions = ViewResource.Loading()) }
+        _uiState.update { it.copy(transactions = it.transactions.loading()) }
         viewModelScope.launch {
-            delay(2000)
-            _uiState.update { it.copy(transactions = ViewResource.Success(list)) }
+            when (val result = repository.getTransactions(
+                page = _uiState.value.transactions.page,
+                count = transactionPageSize
+            )) {
+                is Either.Success ->
+                    _uiState.update { it.copy(transactions = it.transactions.appendData(result.value)) }
+
+                is Either.Failure ->
+                    _uiState.update { it.copy(transactions = it.transactions.error(result.error)) }
+            }
         }
+    }
+
+    fun attemptLoadMoreTransactions() {
+        val shouldIgnore = _uiState.value.transactions is PaginationViewResource.Loading
+        Timber.d("requested to loading more transactions. result: ${if (shouldIgnore) "ignored" else "proceed"}")
+        if (shouldIgnore) return
+
+        fetchFakeTransaction()
     }
 
     fun attemptFetchAll() {
         fetchBalance()
-        fetchFakeTransaction()
+        attemptLoadMoreTransactions()
     }
 }

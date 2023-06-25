@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":core:theme"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+    implementation(project(":core:data"))
 
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
@@ -32,4 +33,5 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(libs.timber)
 }

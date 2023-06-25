@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation(project(":core:theme"))
+    implementation(project(":core:data"))
     implementation(project(":features:transferlist"))
 
     implementation(libs.coreKtx)
@@ -47,6 +48,7 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(libs.timber)
 
     testImplementation(libs.jUnit)
     androidTestImplementation(libs.androidJUnit)
