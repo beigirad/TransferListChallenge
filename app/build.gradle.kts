@@ -1,3 +1,5 @@
+import org.codehaus.groovy.runtime.ProcessGroovyMethods
+
 plugins {
     id(libs.plugins.androidApplication.get().pluginId)
     id(libs.plugins.kotlinAndroid.get().pluginId)
@@ -10,8 +12,12 @@ android {
 
     defaultConfig {
         applicationId = "ir.beigirad.challenge"
+
+        val gitSha = "git rev-parse --short HEAD".execute().text().trim()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1-$gitSha"
+
+        setProperty("archivesBaseName", "challenge-v$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,3 +52,6 @@ dependencies {
     androidTestImplementation(libs.androidJUnit)
     androidTestImplementation(libs.espresso)
 }
+
+fun String.execute() = ProcessGroovyMethods.execute(this)
+fun Process.text(): String = ProcessGroovyMethods.getText(this)
