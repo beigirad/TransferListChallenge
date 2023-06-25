@@ -27,7 +27,7 @@ class FakeDataSource @Inject constructor() {
         return Either.Success(getRandomPrice())
     }
 
-    suspend fun getRandomTransfers(count: Int): Either<List<TransactionEntity>> {
+    suspend fun getRandomTransfers(page: Int, count: Int): Either<List<TransactionEntity>> {
         if (Random.nextInt(0, 10) < 2) return Either.Failure(Error.Message("یه چی به فنا رفته..."))
 
         delay(1000) // simulate real condition
@@ -39,7 +39,7 @@ class FakeDataSource @Inject constructor() {
             calendar.add(Calendar.DAY_OF_YEAR, -Random.nextInt(1, 8))
             calendar.add(Calendar.SECOND, -Random.nextInt(1000, 16000))
             TransactionEntity(
-                id = it.toULong(),
+                id = (page * count + it).toULong(),
                 title = title,
                 type = transactionType,
                 date = calendar.time,

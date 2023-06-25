@@ -14,14 +14,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import ir.beigirad.challenge.common.ViewResource
+import ir.beigirad.challenge.common.PaginationViewResource
 import ir.beigirad.challenge.common.asString
 import ir.beigirad.challenge.common.util.toPx
 import ir.beigirad.challenge.transferlist.databinding.TransferListLayoutBinding
+import ir.beigirad.challenge.transferlist.util.EndAwareAdapter
 import kotlinx.coroutines.launch
 
 /**
@@ -47,7 +49,13 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
         binding.header.btnSpaces.setOnClickListener { showNotImplementedToast() }
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.adapter = TransactionAdapter().also { transactionAdapter = it }
+        binding.recycler.adapter = ConcatAdapter(
+            TransactionAdapter().also { transactionAdapter = it },
+            EndAwareAdapter(
+                onScrolledEnd = viewModel::attemptLoadMoreTransactions,
+                hasMoreToLoad = viewModel.uiState.value.transactions::hasMore
+            )
+        )
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -84,19 +92,19 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
                             getString(R.string.transfer_list_price_formatted, "%,d".format(balance.asNumber()))
                     }
 
-                    binding.errorContainer.isVisible = uiState.transactions is ViewResource.Failure
-                    binding.shimmer.isVisible = uiState.transactions is ViewResource.Loading
-                    binding.recycler.isVisible = uiState.transactions is ViewResource.Success
+                    binding.errorContainer.isVisible = uiState.transactions is PaginationViewResource.Failure
+                    binding.shimmer.isVisible = uiState.transactions is PaginationViewResource.Loading
+                    binding.recycler.isVisible = uiState.transactions is PaginationViewResource.Success
                     when (val transactions = uiState.transactions) {
-                        ViewResource.NotAvailable -> Unit // do nothing
-                        is ViewResource.Loading -> Unit // handled above
+                        is PaginationViewResource.NotAvailable -> Unit // do nothing
+                        is PaginationViewResource.Loading -> Unit // handled above
 
-                        is ViewResource.Failure -> {
+                        is PaginationViewResource.Failure -> {
                             binding.tvError.text = transactions.error.asString()
                             binding.btnError.setOnClickListener { viewModel.attemptFetchAll() }
                         }
 
-                        is ViewResource.Success ->
+                        is PaginationViewResource.Success ->
                             transactionAdapter.submitList(transactions.data)
                     }
                 }

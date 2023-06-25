@@ -9,7 +9,7 @@ import ir.beigirad.challenge.model.TransactionEntity
  */
 interface TransferRepository {
     suspend fun getBalance(): Either<Price>
-    suspend fun getAll(): Either<List<TransactionEntity>>
+    suspend fun getTransactions(page: Int, count: Int): Either<List<TransactionEntity>>
 }
 
 

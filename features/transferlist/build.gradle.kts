@@ -33,4 +33,5 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
+    implementation(libs.timber)
 }
