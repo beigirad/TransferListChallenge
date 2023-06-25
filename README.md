@@ -7,9 +7,14 @@ The straightforward way to build the project is to:
 - Install Android Studio or its commandline tools
 - Run the project by the AS or `./gradlew assembleDebug` for getting a debug `.apk`
 
-## Download pre-build .apk(s)
+## Preview
 
-You can access to latest `.apk` of each PR or commit on `develop` branch.
+Always there's an **.apk** and application's **screen record** are
+in [`/preview`](https://github.com/beigirad/TransferListChallenge/tree/develop/preview) directory.
+
+#### Or
+
+You can access to latest `.apk` of each PR or commit on `develop` branch:
 
 - Go to in [actions tab](https://github.com/beigirad/TransferListChallenge/actions).
 - Open the suit workflow-run that has completed
@@ -58,4 +63,3 @@ You can access to latest `.apk` of each PR or commit on `develop` branch.
 - [ ] Resolve all TODOs and FIXMEs
 - [ ] Finalize everything and clean up
 - [ ] Record a showcase video/gif and add to this file
-
