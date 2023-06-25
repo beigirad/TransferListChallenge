@@ -92,24 +92,46 @@ class TransferListFragment : Fragment(R.layout.transfer_list_layout) {
                             getString(R.string.transfer_list_price_formatted, "%,d".format(balance.asNumber()))
                     }
 
-                    binding.errorContainer.isVisible = uiState.transactions is PaginationViewResource.Failure
-                    binding.shimmer.isVisible = uiState.transactions is PaginationViewResource.Loading
-                    binding.recycler.isVisible = uiState.transactions is PaginationViewResource.Success
                     when (val transactions = uiState.transactions) {
                         is PaginationViewResource.NotAvailable -> Unit // do nothing
-                        is PaginationViewResource.Loading -> Unit // handled above
+                        is PaginationViewResource.Loading -> {
+                            updateTripeViews(
+                                showError = false,
+                                showShimmer = uiState.transactions.data.isEmpty(),
+                                showRecyclerView = uiState.transactions.data.isNotEmpty()
+                            )
+                        }
 
                         is PaginationViewResource.Failure -> {
+                            updateTripeViews(
+                                showError = true,
+                                showShimmer = false,
+                                showRecyclerView = false
+                            )
+
                             binding.tvError.text = transactions.error.asString()
                             binding.btnError.setOnClickListener { viewModel.attemptFetchAll() }
                         }
 
-                        is PaginationViewResource.Success ->
+                        is PaginationViewResource.Success -> {
+                            updateTripeViews(
+                                showError = false,
+                                showShimmer = false,
+                                showRecyclerView = uiState.transactions.data.isNotEmpty()
+                            )
+
                             transactionAdapter.submitList(transactions.data)
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun updateTripeViews(showError: Boolean, showShimmer: Boolean, showRecyclerView: Boolean) {
+        binding.errorContainer.isVisible = showError
+        binding.shimmer.isVisible = showShimmer
+        binding.recycler.isVisible = showRecyclerView
     }
 
     private fun showNotImplementedToast() {
