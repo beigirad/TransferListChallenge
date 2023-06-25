@@ -31,5 +31,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: challenge.apk
-          path: app/build/outputs/apk/**/**/*.apk
+          name: zipped-apk
+          path: app/build/outputs/apk/release/*.apk
